@@ -5,6 +5,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -75,11 +76,17 @@ public class RegistrationSteps {
 
     @And("I do not agree with the terms and conditions")
     public void iDoNotAgreeWithTheTermsAndConditions() {
+        WebElement label = driver.findElement(By.cssSelector("label[for='sign_up_25']"));
+        if (label.isSelected()) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].checked = false;", label);
+        }
+
     }
 
     @Then("I should see an error message for not accepting the terms")
     public void iShouldSeeAnErrorMessageForNotAcceptingTheTerms() {
-        Assert.assertTrue(registrationPage.isValidationMessageDisplayed("You must agree to the terms and conditions"));
+        Assert.assertTrue("Terms and conditions are not shown",
+                registrationPage.isValidationMessageDisplayed("You must confirm that you have read and accepted our Terms and Conditions"));
     }
 
 

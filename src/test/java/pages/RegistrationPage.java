@@ -100,7 +100,7 @@ public class RegistrationPage {
     }
 
     public boolean isValidationMessageDisplayed(String messageText) {
-        List<WebElement> errorMessages = driver.findElements(By.className("field-validation-error"));
+        List<WebElement> errorMessages = driver.findElements(By.cssSelector("[data-valmsg-for='TermsAccept']"));
         for (WebElement msg : errorMessages) {
             if (msg.getText().contains(messageText)) {
                 return true;
