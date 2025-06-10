@@ -69,7 +69,8 @@ public class RegistrationSteps {
 
     @Then("I should see a message with mismatch password error")
     public void iShouldSeeAMessageWithMismatchPasswordError() {
-        Assert.assertTrue(registrationPage.isValidationMessageDisplayed("Passwords don't match"));
+        Assert.assertTrue("Message with mismatch password is not shown",
+                registrationPage.isValidationMessageDisplayed("Password did not match"));
     }
 
     @And("I do not agree with the terms and conditions")
