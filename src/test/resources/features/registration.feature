@@ -1,6 +1,6 @@
 Feature: Basketball England User Account Registration
 
-@registration
+@Registration
   Scenario: Successful registration with valid credentials
    Given I am on the registration page
    When I fill in all the details

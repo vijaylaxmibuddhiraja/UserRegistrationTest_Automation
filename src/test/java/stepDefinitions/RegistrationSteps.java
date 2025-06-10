@@ -48,8 +48,8 @@ public class RegistrationSteps {
     }
 
     @And("I click on the {string} button")
-    public void iClickOnTheButton(String arg0) {
-        registrationPage.termsAndConditionsAccepted();
+    public void iClickOnTheButton(String buttonText) {
+        registrationPage.clickConfirmAndJoin();
     }
 
     @When("I fill in all the details except the last name")
@@ -78,6 +78,7 @@ public class RegistrationSteps {
 
     @Then("I should see an error message for not accepting the terms")
     public void iShouldSeeAnErrorMessageForNotAcceptingTheTerms() {
+        Assert.assertTrue(registrationPage.isValidationMessageDisplayed("You must agree to the terms and conditions"));
     }
 
 

@@ -2,9 +2,7 @@ package pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -35,28 +33,68 @@ public class RegistrationPage {
 
     }
 
-    private WebElement waitUntilClickable(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+    /*private WebElement waitUntilClickable(By locator) {
+        //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
-    }
+    }*/
+
+   /* private WebElement waitUntilVisible(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }*/
 
     public void termsAndConditionsAccepted() {
-        WebElement checkbox = waitUntilClickable(By.id("sign_up_25"));
-        if (!checkbox.isSelected()) {
-            checkbox.click();
+        //WebElement checkbox = waitUntilClickable(By.id("sign_up_25"));
+       // WebElement checkbox =  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("label[for='sign_up_25']")));
+        WebElement label = driver.findElement(By.cssSelector("label[for='sign_up_25']"));
+
+        if (!label.isSelected()) {
+            label.click();
         }
        /* WebElement confirmButton = waitUntilClickable(By.xpath("//button[contains(text(),'CONFIRM AND JOIN')]"));
         confirmButton.click();*/
+    }
+
+    /*public void agreeTermsAndConditions() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        WebElement checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("sign_up_25")));
+        js.executeScript("arguments[0].scrollIntoView(true);", checkbox);
+        js.executeScript("arguments[0].click();", checkbox);
+
+        WebElement submitButton = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//button[contains(text(),'CONFIRM AND JOIN')]")));
+        js.executeScript("arguments[0].scrollIntoView(true);", submitButton);
+        js.executeScript("arguments[0].click();", submitButton);
+
+       // WebElement checkbox = waitUntilClickable(By.id("sign_up_25"));
+        /*WebElement checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("sign_up_25")));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", checkbox);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", checkbox);
+        js.executeScript("arguments[0].click();", checkbox);
+
+        WebElement submitButton = waitUntilClickable(By.xpath("//button[contains(text(),'CONFIRM AND JOIN')]"));
+        js.executeScript("arguments[0].click();", submitButton);
+    }*/
+
+    public void clickConfirmAndJoin() {
+        WebElement confirmButton = wait.until(ExpectedConditions.elementToBeClickable(
+                By.cssSelector("input.btn.btn-big.red")));
+        confirmButton.click();
     }
 
 
 
     public boolean isRegistrationSubmitted() {
         try {
+             wait.until(ExpectedConditions.urlContains("SignUpConfirmation?"));
+            System.out.println("URL: " + driver.getCurrentUrl());
+
             WebElement confirmation = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'THANK YOU FOR CREATING AN ACCOUNT WITH BASKETBALL ENGLAND')]"))
             );
             return confirmation.isDisplayed();
         } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
             return false;
         }
     }
