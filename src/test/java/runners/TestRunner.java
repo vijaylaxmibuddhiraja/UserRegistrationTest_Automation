@@ -9,7 +9,8 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "stepDefinitions",
         plugin = { "pretty", "html:target/cucumber-reports" },
-        monochrome = true
+        monochrome = true,
+        tags = "@MissingLastName"
 )
 
 public class TestRunner {

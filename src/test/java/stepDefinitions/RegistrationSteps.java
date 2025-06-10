@@ -31,15 +31,12 @@ public class RegistrationSteps {
 
     @When("I fill in all the details")
     public void i_fill_in_all_the_details() {
-        registrationPage.fillRegistrationForm("Samika", "Buddh", "samika@example.com", "sam123", "19/03/1986");
+        registrationPage.fillRegistrationForm("Samika", "Buddh", "samika@example.com", "sam123", "sam123", "19/03/1986");
     }
 
     @When("I agree to the terms and conditions")
     public void i_agree_to_the_terms_and_conditions() {
-        WebElement termsCheckbox = driver.findElement(By.id("sign_up_25"));
-        if (!termsCheckbox.isSelected()) {
-            termsCheckbox.click();
-        }
+        registrationPage.termsAndConditionsAccepted();
 
     }
 
@@ -49,12 +46,46 @@ public class RegistrationSteps {
                 registrationPage.isRegistrationSubmitted());
         Thread.sleep(5000);
     }
-}
 
-  /*  @After
+    @And("I click on the {string} button")
+    public void iClickOnTheButton(String arg0) {
+        registrationPage.termsAndConditionsAccepted();
+    }
+
+    @When("I fill in all the details except the last name")
+    public void iFillInAllTheDetailsExceptTheLastName() {
+        registrationPage.fillRegistrationForm("Samika", "", "samika@example.com", "sam123", "sam123", "19/03/1986");
+    }
+
+    @Then("I should see an error message for missing last name")
+    public void iShouldSeeAnErrorMessageForMissingLastName() {
+        Assert.assertTrue(registrationPage.isValidationMessageDisplayed("Last Name is required"));
+    }
+
+    @When("I fill in the details with mismatched passwords")
+    public void iFillInTheDetailsWithMismatchedPasswords() {
+        registrationPage.fillRegistrationForm("Samika", "", "samika@example.com", "sam123", "sam456", "19/03/1986");
+    }
+
+    @Then("I should see a message with mismatch password error")
+    public void iShouldSeeAMessageWithMismatchPasswordError() {
+        Assert.assertTrue(registrationPage.isValidationMessageDisplayed("Passwords don't match"));
+    }
+
+    @And("I do not agree with the terms and conditions")
+    public void iDoNotAgreeWithTheTermsAndConditions() {
+    }
+
+    @Then("I should see an error message for not accepting the terms")
+    public void iShouldSeeAnErrorMessageForNotAcceptingTheTerms() {
+    }
+
+
+    @After
     public void teardown() {
         if (driver != null) {
             driver.quit();
         }
-    }*/
+    }
+}
 

@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class RegistrationPage {
     private WebDriver driver;
@@ -23,13 +24,13 @@ public class RegistrationPage {
         driver.get("https://membership.basketballengland.co.uk/NewSupporterAccount");
     }
 
-    public void fillRegistrationForm(String firstName, String lastName, String email, String password, String dateofbirth) {
+    public void fillRegistrationForm(String firstName, String lastName, String email, String password, String confirmPassword, String dateofbirth) {
         driver.findElement(By.id("member_firstname")).sendKeys(firstName);
         driver.findElement(By.id("member_lastname")).sendKeys(lastName);
         driver.findElement(By.id("member_emailaddress")).sendKeys(email);
         driver.findElement(By.id("member_confirmemailaddress")).sendKeys(email);
         driver.findElement(By.id("signupunlicenced_password")).sendKeys(password);
-        driver.findElement(By.id("signupunlicenced_confirmpassword")).sendKeys(password);
+        driver.findElement(By.id("signupunlicenced_confirmpassword")).sendKeys(confirmPassword);
         driver.findElement(By.id("dp")).sendKeys(dateofbirth);
 
     }
@@ -40,12 +41,12 @@ public class RegistrationPage {
     }
 
     public void termsAndConditionsAccepted() {
-        WebElement termsCheckbox = waitUntilClickable(By.id("sign_up_25"));
-        if (termsCheckbox.isSelected()) {
-            termsCheckbox.click();
+        WebElement checkbox = waitUntilClickable(By.id("sign_up_25"));
+        if (!checkbox.isSelected()) {
+            checkbox.click();
         }
-        WebElement confirmButton = waitUntilClickable(By.xpath("//button[contains(text(),'CONFIRM AND JOIN')]"));
-        confirmButton.click();
+       /* WebElement confirmButton = waitUntilClickable(By.xpath("//button[contains(text(),'CONFIRM AND JOIN')]"));
+        confirmButton.click();*/
     }
 
 
@@ -59,6 +60,18 @@ public class RegistrationPage {
             return false;
         }
     }
+
+    public boolean isValidationMessageDisplayed(String messageText) {
+        List<WebElement> errorMessages = driver.findElements(By.className("field-validation-error"));
+        for (WebElement msg : errorMessages) {
+            if (msg.getText().contains(messageText)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
 
 
