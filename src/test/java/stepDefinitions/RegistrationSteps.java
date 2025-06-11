@@ -64,6 +64,17 @@ public class RegistrationSteps {
                 registrationPage.isLastNameDisplayed("Last Name is required"));
     }
 
+    /*@When("I fill in all the details except the last name")
+    public void iFillInAllTheDetailsExceptTheLastName() {
+        driver.findElement(By.id("member_firstname")).sendKeys("Samika");
+        // driver.findElement(By.id("member_lastname")).sendKeys("Singh");
+        driver.findElement(By.id("member_emailaddress")).sendKeys("samika@example.com");
+        driver.findElement(By.id("signupunlicenced_password")).sendKeys("sam123");
+        driver.findElement(By.id("signupunlicenced_confirmpassword")).sendKeys("sam123");
+        // ...continue filling other required fields
+    }*/
+
+
     @When("I fill in the details with mismatched passwords")
     public void iFillInTheDetailsWithMismatchedPasswords() {
         registrationPage.fillRegistrationForm("Samika", "", "samika@example.com", "sam123", "sam456", "19/03/1986");
@@ -72,7 +83,7 @@ public class RegistrationSteps {
     @Then("I should see a message with mismatch password error")
     public void iShouldSeeAMessageWithMismatchPasswordError() {
         Assert.assertTrue("Message with mismatch password is not shown",
-                registrationPage.isValidationMessageDisplayed("Password did not match"));
+                registrationPage.isPasswordDisplayed("Password did not match"));
     }
 
     @And("I do not agree with the terms and conditions")
@@ -92,7 +103,8 @@ public class RegistrationSteps {
 
 
     @After
-    public void teardown() {
+    public void teardown() throws InterruptedException  {
+       Thread.sleep(5000);
         if (driver != null) {
             driver.quit();
         }

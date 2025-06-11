@@ -80,6 +80,12 @@ public class RegistrationPage {
         return error.getText().trim().contains(expectedMessage);
     }
 
+    public boolean isPasswordDisplayed(String expectedMessage) {
+        WebElement error = driver.findElement(By.cssSelector("[data-valmsg-for='ConfirmPassword']"));
+        return error.getText().trim().contains(expectedMessage);
+    }
+
+
     public boolean isValidationMessageDisplayed(String messageText) {
         List<WebElement> errorMessages = driver.findElements(By.cssSelector("[data-val-required='TermsAccept']"));
         for (WebElement msg : errorMessages) {
