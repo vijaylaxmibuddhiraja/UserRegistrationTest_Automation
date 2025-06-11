@@ -61,21 +61,18 @@ public class RegistrationPage {
     }
 
 
-    public boolean isRegistrationSubmitted() {
-        try {
-            wait.until(ExpectedConditions.urlContains("SignUpConfirmation?"));
-            System.out.println("URL: " + driver.getCurrentUrl());
+    public boolean isRegistrationSubmitted() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
-            WebElement confirmation = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'THANK YOU FOR CREATING AN ACCOUNT WITH BASKETBALL ENGLAND')]"))
-            );
-            return confirmation.isDisplayed();
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            return false;
-        }
+        WebElement confirmation = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector(".signup-confirmation"))
+        );
+        System.out.println("Account Confirm" + confirmation.getText());
+        return confirmation.isDisplayed();
     }
 
-    public boolean isLastNameDisplayed(String expectedMessage) {
+
+public boolean isLastNameDisplayed(String expectedMessage) {
         WebElement error = driver.findElement(By.cssSelector("[data-valmsg-for='Surname']"));
         return error.getText().trim().contains(expectedMessage);
     }

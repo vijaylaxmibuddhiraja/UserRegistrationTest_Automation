@@ -9,8 +9,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.RegistrationPage;
+
+import java.time.Duration;
 
 
 public class RegistrationSteps {
@@ -26,26 +29,19 @@ public class RegistrationSteps {
     }
 
     @Given("I am on the registration page")
-    public void i_am_on_the_registration_page() {
+    public void iAmOnTheRegistrationPage() {
         registrationPage.openRegistrationPage();
     }
 
     @When("I fill in all the details")
-    public void i_fill_in_all_the_details() {
+    public void iFillInAllTheDetails() {
         registrationPage.fillRegistrationForm("Samika", "Buddh", "samika@example.com", "sam123", "sam123", "19/03/1986");
     }
 
     @When("I agree to the terms and conditions")
-    public void i_agree_to_the_terms_and_conditions() {
+    public void iAgreeToTheTermsAndConditions() {
         registrationPage.termsAndConditionsAccepted();
 
-    }
-
-    @Then("I should see a confirmation message")
-    public void i_should_see_a_confirmation_message() throws InterruptedException {
-        Assert.assertTrue("Confirmation message not shown",
-                registrationPage.isRegistrationSubmitted());
-        Thread.sleep(5000);
     }
 
     @And("I click on the {string} button")
@@ -57,6 +53,15 @@ public class RegistrationSteps {
     public void iFillInAllTheDetailsExceptTheLastName() {
         registrationPage.fillRegistrationForm("Samika", "", "samika@example.com", "sam123", "sam123", "19/03/1986");
     }
+
+    @Then("I should see a confirmation message")
+    public void iShouldSeeAConfirmationMessage() throws InterruptedException {
+        Assert.assertTrue("Confirmation message not shown",
+                registrationPage.isRegistrationSubmitted()
+        );
+
+    }
+
 
     @Then("I should see an error message for missing last name")
     public void iShouldSeeAnErrorMessageForMissingLastName() {
