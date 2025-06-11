@@ -60,7 +60,8 @@ public class RegistrationSteps {
 
     @Then("I should see an error message for missing last name")
     public void iShouldSeeAnErrorMessageForMissingLastName() {
-        Assert.assertTrue(registrationPage.isValidationMessageDisplayed("Last Name is required"));
+        Assert.assertTrue("Expected error message not shown",
+                registrationPage.isLastNameDisplayed("Last Name is required"));
     }
 
     @When("I fill in the details with mismatched passwords")

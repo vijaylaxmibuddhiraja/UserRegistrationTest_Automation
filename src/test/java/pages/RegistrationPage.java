@@ -43,39 +43,16 @@ public class RegistrationPage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }*/
 
+
     public void termsAndConditionsAccepted() {
         //WebElement checkbox = waitUntilClickable(By.id("sign_up_25"));
-       // WebElement checkbox =  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("label[for='sign_up_25']")));
+        // WebElement checkbox =  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("label[for='sign_up_25']")));
         WebElement label = driver.findElement(By.cssSelector("label[for='sign_up_25']"));
 
         if (!label.isSelected()) {
             label.click();
         }
-       /* WebElement confirmButton = waitUntilClickable(By.xpath("//button[contains(text(),'CONFIRM AND JOIN')]"));
-        confirmButton.click();*/
     }
-
-    /*public void agreeTermsAndConditions() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-
-        WebElement checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("sign_up_25")));
-        js.executeScript("arguments[0].scrollIntoView(true);", checkbox);
-        js.executeScript("arguments[0].click();", checkbox);
-
-        WebElement submitButton = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.xpath("//button[contains(text(),'CONFIRM AND JOIN')]")));
-        js.executeScript("arguments[0].scrollIntoView(true);", submitButton);
-        js.executeScript("arguments[0].click();", submitButton);
-
-       // WebElement checkbox = waitUntilClickable(By.id("sign_up_25"));
-        /*WebElement checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("sign_up_25")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", checkbox);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", checkbox);
-        js.executeScript("arguments[0].click();", checkbox);
-
-        WebElement submitButton = waitUntilClickable(By.xpath("//button[contains(text(),'CONFIRM AND JOIN')]"));
-        js.executeScript("arguments[0].click();", submitButton);
-    }*/
 
     public void clickConfirmAndJoin() {
         WebElement confirmButton = wait.until(ExpectedConditions.elementToBeClickable(
@@ -84,10 +61,9 @@ public class RegistrationPage {
     }
 
 
-
     public boolean isRegistrationSubmitted() {
         try {
-             wait.until(ExpectedConditions.urlContains("SignUpConfirmation?"));
+            wait.until(ExpectedConditions.urlContains("SignUpConfirmation?"));
             System.out.println("URL: " + driver.getCurrentUrl());
 
             WebElement confirmation = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[contains(text(),'THANK YOU FOR CREATING AN ACCOUNT WITH BASKETBALL ENGLAND')]"))
@@ -99,8 +75,13 @@ public class RegistrationPage {
         }
     }
 
+    public boolean isLastNameDisplayed(String expectedMessage) {
+        WebElement error = driver.findElement(By.cssSelector("[data-valmsg-for='Surname']"));
+        return error.getText().trim().contains(expectedMessage);
+    }
+
     public boolean isValidationMessageDisplayed(String messageText) {
-        List<WebElement> errorMessages = driver.findElements(By.cssSelector("[data-valmsg-for='TermsAccept']"));
+        List<WebElement> errorMessages = driver.findElements(By.cssSelector("[data-val-required='TermsAccept']"));
         for (WebElement msg : errorMessages) {
             if (msg.getText().contains(messageText)) {
                 return true;
@@ -108,8 +89,5 @@ public class RegistrationPage {
         }
         return false;
     }
-
-
 }
-
 
