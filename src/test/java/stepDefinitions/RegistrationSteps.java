@@ -41,8 +41,18 @@ public class RegistrationSteps {
     @When("I agree to the terms and conditions")
     public void iAgreeToTheTermsAndConditions() {
         registrationPage.termsAndConditionsAccepted();
-
     }
+
+    @And("I should see a confirmation that I am over {int} years")
+    public void iShouldSeeAConfirmationThatIAmOverYears(int age) {
+       registrationPage.ageConfirmation();
+    }
+
+    @And("I accept the code of ethics and conduct")
+    public void iAcceptTheCodeOfEthicsAndConduct() {
+        registrationPage.ethicsAndConduct();
+    }
+
 
     @And("I click on the {string} button")
     public void iClickOnTheButton(String buttonText) {
@@ -61,7 +71,6 @@ public class RegistrationSteps {
         );
 
     }
-
 
     @Then("I should see an error message for missing last name")
     public void iShouldSeeAnErrorMessageForMissingLastName() {
@@ -108,11 +117,15 @@ public class RegistrationSteps {
 
 
     @After
-    public void teardown() throws InterruptedException  {
-       Thread.sleep(5000);
+    public void teardown() throws InterruptedException {
+        Thread.sleep(5000);
         if (driver != null) {
             driver.quit();
         }
     }
 }
+
+
+
+
 

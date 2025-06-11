@@ -5,6 +5,8 @@ Feature: Basketball England User Account Registration
    Given I am on the registration page
    When I fill in all the details
    And I agree to the terms and conditions
+   And I should see a confirmation that I am over 18 years
+   And I accept the code of ethics and conduct
    And I click on the "CONFIRM AND JOIN" button
    Then I should see a confirmation message
 

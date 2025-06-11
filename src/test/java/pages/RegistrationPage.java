@@ -60,14 +60,21 @@ public class RegistrationPage {
         confirmButton.click();
     }
 
+    public void ageConfirmation(){
+        WebElement ageCheck = driver.findElement(By.cssSelector("label[for='sign_up_26']"));
+        ageCheck.click();
+    }
+
+    public void ethicsAndConduct() {
+        WebElement checkbox = driver.findElement(By.cssSelector("label[for='fanmembersignup_agreetocodeofethicsandconduct']"));
+         checkbox.click();
+    }
 
     public boolean isRegistrationSubmitted() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-
         WebElement confirmation = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector(".signup-confirmation"))
         );
-        System.out.println("Account Confirm" + confirmation.getText());
         return confirmation.isDisplayed();
     }
 
