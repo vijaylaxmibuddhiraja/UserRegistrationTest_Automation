@@ -1,24 +1,14 @@
 package stepDefinitions;
 
 import io.cucumber.java.en.*;
-import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.RegistrationPage;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.sql.Driver;
-import java.time.Duration;
-import java.util.Properties;
 
 
 public class RegistrationSteps {
@@ -137,6 +127,8 @@ public class RegistrationSteps {
     }
 
 
+
+
    /* @After
     public void teardown() throws InterruptedException {
         Thread.sleep(5000);
@@ -146,7 +138,7 @@ public class RegistrationSteps {
     }*/
 
 
-}
+    }
 
 
 

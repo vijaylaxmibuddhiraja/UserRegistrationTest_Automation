@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
         glue = "stepDefinitions",
         plugin = { "pretty", "html:target/cucumber-reports" },
         monochrome = true,
-        tags =  "@Scenario_outline "
+        tags =  "@MissingLastName"
 )
 
 public class TestRunner {
