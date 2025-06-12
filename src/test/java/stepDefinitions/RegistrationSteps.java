@@ -9,21 +9,34 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.RegistrationPage;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.Driver;
 import java.time.Duration;
+import java.util.Properties;
 
 
 public class RegistrationSteps {
     private WebDriver driver;
     private RegistrationPage registrationPage;
 
-    @Before
-    public void setup() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Vijaylaxmi Buddhiraj\\IdeaProjects\\UserRegistrationTest_Automation\\src\\test\\resources\\drivers\\chromedriver.exe");
+    /*@Before
+    public void setup()  {
+        System.setProperty("webdriver.chrome.driver", "src\\test\\resources\\drivers\\chromedriver.exe");
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        registrationPage = new RegistrationPage(driver);
+    }*/
+
+    @Before
+    public void setup()  {
+        System.setProperty("webdriver.edge.driver", "src/test/resources/drivers/msedgedriver.exe");
+        driver = new EdgeDriver();
         driver.manage().window().maximize();
         registrationPage = new RegistrationPage(driver);
     }
@@ -35,13 +48,19 @@ public class RegistrationSteps {
 
     @When("I fill in all the details")
     public void iFillInAllTheDetails() {
-        registrationPage.fillRegistrationForm("Samika", "Buddh", "samika@example.com", "sam123", "sam123", "19/03/1986");
+        registrationPage.fillRegistrationForm("Samika", "Buddh", "samika" +System.currentTimeMillis() + "@example.com", "sam123", "sam123", "19/03/1986");
     }
 
     @When("I agree to the terms and conditions")
     public void iAgreeToTheTermsAndConditions() {
         registrationPage.termsAndConditionsAccepted();
     }
+
+    @When("I fill in all the details except the last name")
+    public void iFillInAllTheDetailsExceptTheLastName() {
+        registrationPage.fillRegistrationForm("Samika", "", "samika19@example.com" , "sam123", "sam123", "19/03/1986");
+    }
+
 
     @And("I should see a confirmation that I am over {int} years")
     public void iShouldSeeAConfirmationThatIAmOverYears(int age) {
@@ -57,12 +76,14 @@ public class RegistrationSteps {
     @And("I click on the {string} button")
     public void iClickOnTheButton(String buttonText) {
         registrationPage.clickConfirmAndJoin();
+
     }
 
-    @When("I fill in all the details except the last name")
-    public void iFillInAllTheDetailsExceptTheLastName() {
-        registrationPage.fillRegistrationForm("Samika", "", "samika@example.com", "sam123", "sam123", "19/03/1986");
+    @And("I see it is redirecting to join page")
+    public void iSeeItIsRedirectingToJoinPage() {
+      registrationPage.isJoinConfirmed();
     }
+
 
     @Then("I should see a confirmation message")
     public void iShouldSeeAConfirmationMessage() throws InterruptedException {
@@ -112,17 +133,19 @@ public class RegistrationSteps {
     @Then("I should see an error message for not accepting the terms")
     public void iShouldSeeAnErrorMessageForNotAcceptingTheTerms() {
         Assert.assertTrue("Terms and conditions are not shown",
-                registrationPage.isValidationMessageDisplayed("You must confirm that you have read and accepted our Terms and Conditions"));
+                registrationPage.isTermsDisplayed("You must confirm that you have read and accepted our Terms and Conditions"));
     }
 
 
-    @After
+   /* @After
     public void teardown() throws InterruptedException {
         Thread.sleep(5000);
         if (driver != null) {
             driver.quit();
         }
-    }
+    }*/
+
+
 }
 
 

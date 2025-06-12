@@ -8,6 +8,7 @@ Feature: Basketball England User Account Registration
    And I should see a confirmation that I am over 18 years
    And I accept the code of ethics and conduct
    And I click on the "CONFIRM AND JOIN" button
+   And I see it is redirecting to join page
    Then I should see a confirmation message
 
 @MissingLastName

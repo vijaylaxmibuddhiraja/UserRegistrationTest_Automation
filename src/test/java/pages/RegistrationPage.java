@@ -54,11 +54,21 @@ public class RegistrationPage {
         }
     }
 
-    public void clickConfirmAndJoin() {
+   /* public void clickConfirmAndJoin() {
         WebElement confirmButton = wait.until(ExpectedConditions.elementToBeClickable(
                 By.cssSelector("input.btn.btn-big.red")));
         confirmButton.click();
+    }*/
+
+    public void clickConfirmAndJoin() {
+        WebElement confirmButton = waitUntilClickable(By.cssSelector("input.btn.btn-big.red"));
+        confirmButton.click();
     }
+
+    private WebElement waitUntilClickable(By locator) {
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
 
     public void ageConfirmation(){
         WebElement ageCheck = driver.findElement(By.cssSelector("label[for='sign_up_26']"));
@@ -70,16 +80,37 @@ public class RegistrationPage {
          checkbox.click();
     }
 
+    public void isJoinConfirmed(){
+        //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        WebElement join = wait.until(ExpectedConditions.elementToBeClickable(
+                By.cssSelector("input[name='join'][value='CONFIRM AND JOIN']")));
+        join.click();
+    }
+
     public boolean isRegistrationSubmitted() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+
+        wait.until(ExpectedConditions.urlContains("SignUpConfirmation?"));
         WebElement confirmation = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector(".signup-confirmation"))
         );
         return confirmation.isDisplayed();
     }
 
+    /*public boolean isRegistrationValid() {
+        List<WebElement> errors = driver.findElements(By.cssSelector(".field-validation-error"));
+        for(WebElement error : errors) {
+            if (error.isDisplayed()) {
+                System.out.println("Error shows " + error.getText());
+                return true;
+            }
+        }
+            return false;
 
-public boolean isLastNameDisplayed(String expectedMessage) {
+
+    }*/
+
+    public boolean isLastNameDisplayed(String expectedMessage) {
         WebElement error = driver.findElement(By.cssSelector("[data-valmsg-for='Surname']"));
         return error.getText().trim().contains(expectedMessage);
     }
@@ -90,14 +121,9 @@ public boolean isLastNameDisplayed(String expectedMessage) {
     }
 
 
-    public boolean isValidationMessageDisplayed(String messageText) {
-        List<WebElement> errorMessages = driver.findElements(By.cssSelector("[data-val-required='TermsAccept']"));
-        for (WebElement msg : errorMessages) {
-            if (msg.getText().contains(messageText)) {
-                return true;
-            }
-        }
-        return false;
+   public boolean isTermsDisplayed(String expectedMessage) {
+    WebElement terms = driver.findElement(By.cssSelector("span[data-valmsg-for='TermsAccept']"));
+    return terms.getText().trim().contains(expectedMessage);
     }
 }
 
